@@ -23,7 +23,7 @@ jobs:
         run: |
           target_date=$(date -d '2023-12-31' +%s)
           current_date=$(date +%s)
-          days_left=$((target_date - current_date) / 86400 ))
+          days_left=$(( (target_date - current_date) / 86400 ))
           echo "There are $days_left."
           echo "::set-output-name=days_left::$days_left"
           
