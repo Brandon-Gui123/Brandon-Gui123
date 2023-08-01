@@ -1,0 +1,32 @@
+name: Dates till end
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "testing-dates-till-end-action" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Calculate days left till end
+        id: calc-days-shell
+        run: |
+          target_date=$(date -d '2023-12-31' +%s)
+          current_date=$(date +%s)
+          days_left=$((target_date - current_date) / 86400 ))
+          echo "There are $days_left."
+          echo "::set-output-name=days_left::$days_left"
+          
+      - name: Use shell output
+        run: |
+          echo "The output of the previous step is ${{ steps.calc-days-shell.outputs.days_left }}"
